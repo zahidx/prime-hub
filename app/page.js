@@ -1,85 +1,130 @@
-'use client'; // Important for client-side hooks like useState and useEffect
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Loader from "./compo/Loader";
+import Image from "next/image";
 
-const Home = () => {
+export default function Home() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-r from-[#0E1628] to-[#380643] text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#0E1628] to-[#380643] text-white h-screen flex flex-col justify-center items-center text-center px-4">
-        <h1 className="text-5xl font-bold mb-4">Welcome to Prime Hub</h1>
-        <p className="text-lg mb-6">Your one-stop platform for all things premium.</p>
-        <Link href="/signup">
-          <button className="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">
-            Get Started
-          </button>
-        </Link>
+      <section className="h-screen flex flex-col justify-center items-center text-center px-6 relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/path/to/your/image.jpg')" }}>
+        <motion.h1
+          className="text-6xl font-extrabold mb-4 drop-shadow-lg leading-tight"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Welcome to <span className="text-[#E5970F]">Prime Hub</span>
+        </motion.h1>
+        <motion.p
+          className="text-lg mb-6 text-gray-300 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
+          A premium platform with personalized content, seamless interaction, and cutting-edge experiences.
+        </motion.p>
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <Link href="/signup">
+            <button className="bg-[#E5970F] text-black py-3 px-8 rounded-full text-lg font-semibold hover:bg-[#e69a10] transition-all duration-300 shadow-xl transform hover:scale-105">
+              Get Started
+            </button>
+          </Link>
+        </motion.div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto text-center px-6">
-          <h2 className="text-3xl font-semibold mb-8">Key Features</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Premium Content</h3>
-              <p>Access exclusive content that elevates your experience.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Personalized Dashboard</h3>
-              <p>Manage your preferences and track your progress seamlessly.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Community Interaction</h3>
-              <p>Engage with like-minded individuals and grow together.</p>
-            </div>
+          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]">
+            Key Features
+          </h2>
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              { title: "Premium Content", desc: "Access exclusive content that elevates your experience." },
+              { title: "Personalized Dashboard", desc: "Manage your preferences and track your progress seamlessly." },
+              { title: "Community Interaction", desc: "Engage with like-minded individuals and grow together." },
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20 transition transform hover:scale-110 hover:shadow-xl"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.3, duration: 0.6 }}
+              >
+                <h3 className="text-xl font-semibold text-[#E5970F] mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-300">{feature.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section (Optional) */}
-      <section className="py-16 bg-gray-800 text-white">
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gradient-to-r from-[#0E1628] to-[#380643]">
         <div className="max-w-7xl mx-auto text-center px-6">
-          <h2 className="text-3xl font-semibold mb-8">What Our Users Say</h2>
-          <div className="flex justify-center space-x-8">
-            <div className="bg-gray-700 p-8 rounded-lg shadow-md w-1/3">
-              <p className="text-lg mb-4">"Prime Hub has transformed my workflow. It’s easy to use and the content is top-notch!"</p>
-              <p className="font-semibold">John Doe</p>
-              <p className="text-sm">Freelancer</p>
-            </div>
-            <div className="bg-gray-700 p-8 rounded-lg shadow-md w-1/3">
-              <p className="text-lg mb-4">"I love the personalized dashboard. It’s made managing my tasks so much easier!"</p>
-              <p className="font-semibold">Jane Smith</p>
-              <p className="text-sm">Entrepreneur</p>
-            </div>
+          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]">
+            What Our Users Say
+          </h2>
+          <div className="grid md:grid-cols-2 gap-10">
+            {[
+              { name: "John Doe", role: "Freelancer", review: "Prime Hub transformed my workflow! The content is top-notch." },
+              { name: "Jane Smith", role: "Entrepreneur", review: "The personalized dashboard makes managing tasks seamless." },
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="bg-white/10 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/20 transition-transform hover:scale-105 hover:shadow-xl"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.3, duration: 0.6 }}
+              >
+                <p className="text-gray-300 italic mb-4">"{testimonial.review}"</p>
+                <p className="font-semibold text-[#E5970F]">{testimonial.name}</p>
+                <p className="text-sm text-gray-400">{testimonial.role}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer Section */}
-      <footer className="bg-gray-900 text-white py-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
-          <div>
-            <Link href="/">
-              <span className="text-2xl font-bold">Prime Hub</span>
-            </Link>
-          </div>
-          <div className="space-x-6">
-            <Link href="/about">
-              About
-            </Link>
-            <Link href="/pricing">
-              Pricing
-            </Link>
-            <Link href="/contact">
-              Contact
-            </Link>
-          </div>
+      {/* Parallax Section (Optional, for added interactivity) */}
+      <section className="relative py-20 bg-black">
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/path/to/your/parallax-image.jpg')" }}
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ type: "spring", stiffness: 100 }}
+        />
+        <div className="relative z-10 text-center text-white">
+          <h2 className="text-4xl font-semibold mb-6 text-[#E5970F]">
+            Ready to Experience the Best?
+          </h2>
+          <Link href="/signup">
+            <button className="bg-[#E5970F] text-black py-3 px-8 rounded-full text-lg font-semibold hover:bg-[#e69a10] transition-all duration-300 shadow-lg">
+              Join Now
+            </button>
+          </Link>
         </div>
-      </footer>
+      </section>
     </div>
   );
-};
-
-export default Home;
+}
