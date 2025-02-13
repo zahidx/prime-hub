@@ -1,6 +1,6 @@
 // Import necessary Firebase modules
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAnalytics, isSupported } from "firebase/analytics";
@@ -25,7 +25,19 @@ const storage = getStorage(app);
 // Initialize Google Auth Provider
 const googleProvider = new GoogleAuthProvider();
 
+// Initialize Phone Auth with reCAPTCHA
+const setupRecaptcha = (container) => {
+  const recaptchaVerifier = new RecaptchaVerifier(container, {
+    size: "invisible",  // You can also use 'normal' for visible reCAPTCHA
+    callback: (response) => {
+      console.log("reCAPTCHA verified:", response);
+    },
+  }, auth);
+  return recaptchaVerifier;
+};
+
 // Ensure analytics only runs in the browser
 const analytics = typeof window !== "undefined" ? await isSupported().then((yes) => (yes ? getAnalytics(app) : null)) : null;
 
-export { app, auth, db, storage, analytics, googleProvider };
+// Export Firebase utilities and configurations
+export { app, auth, db, storage, analytics, googleProvider, signInWithPopup, signInWithPhoneNumber, setupRecaptcha };

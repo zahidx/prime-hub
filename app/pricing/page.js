@@ -55,7 +55,7 @@ export default function Pricing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0E1628] to-[#380643] text-white py-20 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#0E1628] to-[#380643] text-white py-20 px-6 mt-20">
       <div className="max-w-6xl mx-auto text-center">
         <motion.h1
           className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-[#E5970F] to-[#E69A10] text-transparent bg-clip-text"
