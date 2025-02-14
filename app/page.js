@@ -5,11 +5,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Loader from "./compo/Loader";
 import Image from "next/image";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false, // ✅ Allows animations on every scroll
+      mirror: true, // ✅ Triggers animations when scrolling back up
+    });
+
     const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
@@ -18,8 +26,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#0E1628] to-[#380643] text-white overflow-hidden">
+      
       {/* Hero Section */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-6 relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/path/to/your/image.jpg')" }}>
+      <section
+        className="h-screen flex flex-col justify-center items-center text-center px-6 relative bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/path/to/your/image.jpg')" }}
+      >
         <motion.h1
           className="text-6xl font-extrabold mb-4 drop-shadow-lg leading-tight"
           initial={{ opacity: 0, y: -50 }}
@@ -52,7 +64,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]">
+          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]" data-aos="fade-up">
             Key Features
           </h2>
           <div className="grid md:grid-cols-3 gap-10">
@@ -61,18 +73,15 @@ export default function Home() {
               { title: "Personalized Dashboard", desc: "Manage your preferences and track your progress seamlessly." },
               { title: "Community Interaction", desc: "Engage with like-minded individuals and grow together." },
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-white/20 transition transform hover:scale-110 hover:shadow-xl"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.3, duration: 0.6 }}
+                data-aos="fade-up"
+                data-aos-delay={index * 200}
               >
-                <h3 className="text-xl font-semibold text-[#E5970F] mb-3">
-                  {feature.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-[#E5970F] mb-3">{feature.title}</h3>
                 <p className="text-gray-300">{feature.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -81,7 +90,7 @@ export default function Home() {
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-r from-[#0E1628] to-[#380643]">
         <div className="max-w-7xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]">
+          <h2 className="text-4xl font-semibold mb-12 text-[#E5970F]" data-aos="fade-up">
             What Our Users Say
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
@@ -89,23 +98,22 @@ export default function Home() {
               { name: "John Doe", role: "Freelancer", review: "Prime Hub transformed my workflow! The content is top-notch." },
               { name: "Jane Smith", role: "Entrepreneur", review: "The personalized dashboard makes managing tasks seamless." },
             ].map((testimonial, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-white/10 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/20 transition-transform hover:scale-105 hover:shadow-xl"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.3, duration: 0.6 }}
+                data-aos="fade-up"
+                data-aos-delay={index * 200}
               >
                 <p className="text-gray-300 italic mb-4">"{testimonial.review}"</p>
                 <p className="font-semibold text-[#E5970F]">{testimonial.name}</p>
                 <p className="text-sm text-gray-400">{testimonial.role}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Parallax Section (Optional, for added interactivity) */}
+      {/* Call to Action Section */}
       <section className="relative py-20 bg-black">
         <motion.div
           className="absolute inset-0 bg-cover bg-center"
@@ -115,11 +123,14 @@ export default function Home() {
           transition={{ type: "spring", stiffness: 100 }}
         />
         <div className="relative z-10 text-center text-white">
-          <h2 className="text-4xl font-semibold mb-6 text-[#E5970F]">
+          <h2 className="text-4xl font-semibold mb-6 text-[#E5970F]" data-aos="fade-up">
             Ready to Experience the Best?
           </h2>
           <Link href="/signup">
-            <button className="bg-[#E5970F] text-black py-3 px-8 rounded-full text-lg font-semibold hover:bg-[#e69a10] transition-all duration-300 shadow-lg">
+            <button
+              className="bg-[#E5970F] text-black py-3 px-8 rounded-full text-lg font-semibold hover:bg-[#e69a10] transition-all duration-300 shadow-lg"
+              data-aos="zoom-in"
+            >
               Join Now
             </button>
           </Link>

@@ -67,7 +67,7 @@ const VideosPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#0E1628] to-[#380643] text-white flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen pt-40 bg-gradient-to-r from-[#0E1628] to-[#380643] text-white flex flex-col items-center justify-center p-6">
       <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
         Premium Video Gallery
       </h1>
