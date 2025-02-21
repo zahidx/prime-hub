@@ -7,6 +7,7 @@ import Loader from "./compo/Loader";
 import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Song from "./compo/Song";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -112,6 +113,35 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+
+
+
+
+
+
+
+
+
+          <Song />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Call to Action Section */}
       <section className="relative py-20 bg-black">
