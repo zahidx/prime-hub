@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import Modal from "./Modal"; // Import the Modal component
 
 const SongCard = ({ song, index, onClick, isFavorite, toggleFavorite }) => (
-  <div className="relative group cursor-pointer bg-gray-800 shadow-lg rounded-xl overflow-hidden transition-transform transform hover:shadow-2xl hover:scale-105">
+  <div className="relative group cursor-pointer bg-gray-800 shadow-lg rounded-xl overflow-hidden transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
     <div onClick={() => onClick(song.id)} className="relative pb-[56.25%]">
       <img
         src={`https://img.youtube.com/vi/${song.id}/hqdefault.jpg`}
         alt={song.title}
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-75"
         loading="lazy"
       />
-      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-50 transition duration-300">
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
         <svg
           className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           fill="currentColor"
@@ -21,13 +22,14 @@ const SongCard = ({ song, index, onClick, isFavorite, toggleFavorite }) => (
       </div>
     </div>
     <div className="p-4 flex justify-between items-center">
-      <p className="text-sm font-medium text-white">{song.title}</p>
+      <p className="text-sm font-medium text-white truncate">{song.title}</p>
       <button
         onClick={(e) => {
           e.stopPropagation();
           toggleFavorite(song.id);
         }}
-        className="focus:outline-none transition-colors duration-300"
+        className="focus:outline-none transition-colors duration-300 group-hover:text-red-500"
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 fill-red-500" viewBox="0 0 20 20">
@@ -39,33 +41,6 @@ const SongCard = ({ song, index, onClick, isFavorite, toggleFavorite }) => (
           </svg>
         )}
       </button>
-    </div>
-  </div>
-);
-
-const Modal = ({ videoId, onClose }) => (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm transition-opacity duration-300"
-    onClick={onClose}
-  >
-    <div
-      className="relative w-full max-w-3xl mx-4 transform transition-all duration-300 scale-100"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button onClick={onClose} className="absolute top-2 right-2 text-white text-3xl font-bold z-10 hover:text-red-400 transition-colors duration-300">
-        &times;
-      </button>
-      <div className="relative pb-[56.25%] rounded-lg overflow-hidden shadow-xl">
-        <iframe
-          className="absolute top-0 left-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-        />
-      </div>
     </div>
   </div>
 );
@@ -91,12 +66,13 @@ const SongsPage = () => {
     { id: "YT05j5c9j2Y", title: "Song Title 13" },
     { id: "_d_c9koE0c", title: "Song Title 14" },
     { id: "kJQPc9FKj2U", title: "Song Title 15" },
-    { id: "dQw4w9WgXcQ", title: "Never Gonna Give You Up (Again)" },
-    { id: "hLQlStSQi2Q", title: "Song Title 17" },
-    { id: "OPk9x_0i-40", title: "Song Title 18" },
-    { id: "rYEDA3JcQro", title: "Song Title 19" },
-    { id: "lp-EOl_zJSE", title: "Song Title 20" },
+    { id: "hLQlStSQi2Q", title: "Song Title 16" },
+    { id: "OPk9x_0i-40", title: "Song Title 17" },
+    { id: "rYEDA3JcQro", title: "Song Title 18" },
+    { id: "lp-EOl_zJSE", title: "Song Title 19" },
+    { id: "Wn4xq2yX5cM", title: "Song Title 20" },
   ];
+  
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);

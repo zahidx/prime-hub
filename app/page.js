@@ -8,6 +8,7 @@ import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Song from "./compo/Song";
+import PlayList from "./compo/PlayList";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -124,6 +125,7 @@ export default function Home() {
 
 
           <Song />
+          <PlayList />
 
 
 
